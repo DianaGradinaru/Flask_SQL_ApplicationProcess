@@ -48,3 +48,13 @@ def get_applicant_data_by_name(cursor: RealDictCursor, name: str) -> list:
     cursor.execute(query, (name, name,))
     return cursor.fetchall()
     
+@database_common.connection_handler
+def get_applicant_data_by_email_ending(cursor: RealDictCursor, email: str) -> list:
+    query = """
+        SELECT first_name, last_name, phone_number
+        FROM applicant
+        WHERE email ilike %s
+        ORDER BY first_name; """
+    mail = f'%{email}'
+    cursor.execute(query, (mail,))
+    return cursor.fetchall()

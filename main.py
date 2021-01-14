@@ -12,9 +12,12 @@ def index():
 
 @app.route("/applicants-phone", methods=["post"])
 def applicants_list():
-    applicant_name = request.form.get("applicant-name")
-    applicants = data_manager.get_applicant_data_by_name(applicant_name)
-
+    if request.form.get("applicant-name"):
+        applicant_name = request.form.get("applicant-name")
+        applicants = data_manager.get_applicant_data_by_name(applicant_name)
+    elif request.form.get("applicant-email"):
+        email = request.form.get("applicant-email")
+        applicants = data_manager.get_applicant_data_by_email_ending(email)
     return render_template("applicants-phone.html", applicants=applicants)
 
 
