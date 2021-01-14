@@ -26,7 +26,7 @@ def get_mentors_by_last_name(cursor: RealDictCursor, last_name: str) -> list:
     cursor.execute(query, (last_name,))
     return cursor.fetchall()
 
-
+@database_common.connection_handler
 def get_mentors_by_city(cursor: RealDictCursor, city: str) -> list:
     query = """
         SELECT first_name, last_name, city
@@ -36,3 +36,5 @@ def get_mentors_by_city(cursor: RealDictCursor, city: str) -> list:
     print(f"{query=}")
     cursor.execute(query, (city,))
     return cursor.fetchall()
+
+
