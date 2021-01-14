@@ -10,6 +10,14 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/applicants-phone", methods=["post"])
+def applicants_list():
+    applicant_name = request.form.get("applicant-name")
+    applicants = data_manager.get_applicant_data_by_name(applicant_name)
+
+    return render_template("applicants-phone.html", applicants=applicants)
+
+
 @app.route("/mentors")
 def mentors_list():
     mentor_name = request.args.get("mentor-last-name")
@@ -18,7 +26,6 @@ def mentors_list():
     if mentor_name:
         mentor_details = data_manager.get_mentors_by_last_name(mentor_name)
     elif city:
-        print(type(city))
         mentor_details = data_manager.get_mentors_by_city(city)
     else:
         mentor_details = data_manager.get_mentors()

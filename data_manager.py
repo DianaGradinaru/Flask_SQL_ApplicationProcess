@@ -37,4 +37,14 @@ def get_mentors_by_city(cursor: RealDictCursor, city: str) -> list:
     cursor.execute(query, (city,))
     return cursor.fetchall()
 
-
+@database_common.connection_handler
+def get_applicant_data_by_name(cursor: RealDictCursor, name: str) -> list:
+    query = """
+        SELECT first_name, last_name, phone_number
+        FROM applicant
+        WHERE first_name ilike %s
+        OR last_name ilike %s
+        ORDER BY first_name;"""
+    cursor.execute(query, (name, name,))
+    return cursor.fetchall()
+    
