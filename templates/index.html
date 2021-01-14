@@ -5,6 +5,7 @@
     <h3>Choose a list</h3>
     <ul>
         <li><a href="{{ url_for('mentors_list') }}">Mentors</a></li>
+        <li><a href="{{ url_for('applicants_list') }}">Applicants</a></li>
     </ul>
 </nav>
 
@@ -12,7 +13,7 @@
     <h3>Search for applicants</h3>
 
     <div>
-        <form action="{{ url_for('applicants_list') }}" method="post">
+        <form action="{{ url_for('applicants_phone') }}" method="post">
             <label for="applicant-name">Search by name:</label>
             <input id="applicant-name" type="text" name="applicant-name">
             <button type="submit">Search</button>
@@ -20,7 +21,7 @@
     </div>
 
         <div>
-            <form action="{{ url_for('applicants_list') }}" method="post">
+            <form action="{{ url_for('applicants_phone') }}" method="post">
                 <label for="applicant-email">Search by email:</label>
                 <input id="applicant-email" type="text" name="applicant-email">
                 <button type="submit">Search</button>

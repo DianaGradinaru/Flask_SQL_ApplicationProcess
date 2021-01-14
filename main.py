@@ -10,8 +10,15 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/applicants-phone", methods=["post"])
+@app.route("/applicants")
 def applicants_list():
+    return render_template(
+        "applicants-list.html", applicants=data_manager.get_all_applicants()
+    )
+
+
+@app.route("/applicants-phone", methods=["post"])
+def applicants_phone():
     if request.form.get("applicant-name"):
         applicant_name = request.form.get("applicant-name")
         applicants = data_manager.get_applicant_data_by_name(applicant_name)
