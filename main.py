@@ -10,6 +10,21 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/applicants/<code>", methods=["GET", "POST"])
+def get_applicant(code):
+    if request.method == "POST":
+        phone = request.form.get("new-phone")
+        data_manager.update_phone_number(code, phone)
+    phone = data_manager.get_phone_by_code(code)["phone_number"]
+    return render_template("editing.html", phone=phone, code=code)
+
+
+@app.route("/applicants/<code>/delete")
+def delete_applicant(code):
+    data_manager.delete_applicant(code)
+    return redirect(url_for("applicants_list"))
+
+
 @app.route("/applicants")
 def applicants_list():
     return render_template(

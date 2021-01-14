@@ -26,6 +26,7 @@ def get_mentors_by_last_name(cursor: RealDictCursor, last_name: str) -> list:
     cursor.execute(query, (last_name,))
     return cursor.fetchall()
 
+
 @database_common.connection_handler
 def get_mentors_by_city(cursor: RealDictCursor, city: str) -> list:
     query = """
@@ -37,6 +38,7 @@ def get_mentors_by_city(cursor: RealDictCursor, city: str) -> list:
     cursor.execute(query, (city,))
     return cursor.fetchall()
 
+
 @database_common.connection_handler
 def get_applicant_data_by_name(cursor: RealDictCursor, name: str) -> list:
     query = """
@@ -45,9 +47,16 @@ def get_applicant_data_by_name(cursor: RealDictCursor, name: str) -> list:
         WHERE first_name ilike %s
         OR last_name ilike %s
         ORDER BY first_name;"""
-    cursor.execute(query, (name, name,))
+    cursor.execute(
+        query,
+        (
+            name,
+            name,
+        ),
+    )
     return cursor.fetchall()
-    
+
+
 @database_common.connection_handler
 def get_all_applicants(cursor: RealDictCursor):
     query = """
@@ -58,6 +67,7 @@ def get_all_applicants(cursor: RealDictCursor):
     cursor.execute(query)
     return cursor.fetchall()
 
+
 @database_common.connection_handler
 def get_applicant_data_by_email_ending(cursor: RealDictCursor, email: str) -> list:
     query = """
@@ -65,6 +75,42 @@ def get_applicant_data_by_email_ending(cursor: RealDictCursor, email: str) -> li
         FROM applicant
         WHERE email ilike %s
         ORDER BY first_name; """
-    mail = f'%{email}'
+    mail = f"%{email}"
     cursor.execute(query, (mail,))
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_phone_by_code(cursor: RealDictCursor, code):
+    query = """
+        SELECT phone_number
+        FROM applicant
+        WHERE application_code = %s;
+    """
+    cursor.execute(query, (code,))
+    return cursor.fetchone()
+
+
+@database_common.connection_handler
+def update_phone_number(cursor: RealDictCursor, code, phone):
+    query = """ 
+        UPDATE applicant
+        SET phone_number = %s
+        WHERE application_code = %s; 
+    """
+    cursor.execute(
+        query,
+        (
+            phone,
+            code,
+        ),
+    )
+
+
+@database_common.connection_handler
+def delete_applicant(cursor: RealDictCursor, code):
+    query = """ 
+        DELETE from applicant
+        WHERE application_code = %s; 
+    """
+    cursor.execute(query, (code,))
