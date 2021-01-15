@@ -115,10 +115,30 @@ def delete_applicant(cursor: RealDictCursor, code):
     """
     cursor.execute(query, (code,))
 
+
 @database_common.connection_handler
 def delete_applicant_by_email(cursor: RealDictCursor, email):
     query = """ 
         DELETE from applicant
         WHERE email ilike %s; 
     """
-    cursor.execute(query, (f'%{email}',))
+    cursor.execute(query, (f"%{email}",))
+
+
+@database_common.connection_handler
+def add_new_applicant(
+    cursor: RealDictCursor, first_name, last_name, email, phone_number
+):
+    query = """
+        INSERT into applicant (first_name, last_name, email, phone_number, application_code)
+        VALUES (%s, %s, %s, %s, '54823');
+    """
+    cursor.execute(
+        query,
+        (
+            first_name,
+            last_name,
+            email,
+            phone_number,
+        ),
+    )

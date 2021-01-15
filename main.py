@@ -36,6 +36,19 @@ def applicants_list():
     )
 
 
+@app.route("/add-applicant", methods=["GET", "POST"])
+def add_applicant():
+    if request.method == "POST":
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        email = request.form.get("email")
+        phone_number = request.form.get("phone_number")
+        data_manager.add_new_applicant(first_name, last_name, email, phone_number)
+        return redirect(url_for("get_applicant", code="54823"))
+
+    return render_template("add_applicant.html")
+
+
 @app.route("/applicants-phone", methods=["post"])
 def applicants_phone():
     if request.form.get("applicant-name"):
