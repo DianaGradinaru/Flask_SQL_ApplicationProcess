@@ -25,8 +25,12 @@ def delete_applicant(code):
     return redirect(url_for("applicants_list"))
 
 
-@app.route("/applicants")
+@app.route("/applicants", methods=["GET", "POST"])
 def applicants_list():
+    if request.method == "POST":
+        email = request.form.get("email-ending")
+        if email == "mauriseu.net":
+            data_manager.delete_applicant_by_email(email)
     return render_template(
         "applicants-list.html", applicants=data_manager.get_all_applicants()
     )

@@ -23,6 +23,13 @@
         </tr>
         {% endfor %}
         
+    <form action="{{  url_for('applicants_list' ) }}" method="post">
+        <label for="email-ending">Email address ending in: </label>
+        <input type="text" id="email-ending" name="email-ending">
+        <button type="submit">Submit</button>
+    </form>
+    
+
     </tbody>
 </table>
 {% endblock %}
