@@ -1,4 +1,0 @@
-export PSQL_USER_NAME=dee
-export PSQL_PASSWORD=sequelify
-export PSQL_HOST=localhost
-export PSQL_DB_NAME=test_db
